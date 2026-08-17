@@ -1,0 +1,41 @@
+Node.js Architecture Notes
+
+1. What is the Event Loop?
+
+The Event Loop is the core mechanism that allows Node.js to perform 
+non-blocking I/O operations even though JavaScript itself is single-threaded. 
+It continuously checks if there are any pending tasks (like file reads, 
+network requests, or timers) in the queue and executes their callback 
+functions once they are ready. Instead of waiting for a slow operation to 
+finish, Node.js registers a callback and moves on to execute other code, 
+coming back to that callback only when the operation completes. This is 
+what makes Node.js efficient for handling many concurrent requests without 
+creating a new thread for each one. The Event Loop works in phases (timers, 
+I/O callbacks, idle, poll, check, close callbacks), processing tasks from 
+each phase in order before moving to the next.
+
+2. Is Node.js single-threaded or multi-threaded? Explain.
+
+Node.js is primarily single-threaded when it comes to executing JavaScript 
+code, meaning it runs on a single main thread that handles all the 
+application logic. However, this does not mean Node.js only uses one 
+thread overall. Behind the scenes, Node.js uses a thread pool (managed by 
+libuv) to handle expensive or blocking operations such as file system 
+tasks, DNS lookups, and some cryptographic functions, so these do not 
+block the main thread. This hybrid approach allows Node.js to keep the 
+main thread free and responsive while heavy operations run in the 
+background. So while the JavaScript execution model is single-threaded, 
+the underlying I/O handling is multi-threaded.
+
+3. What is the role of libuv?
+
+libuv is a C library that Node.js uses internally to handle asynchronous 
+and non-blocking operations across different operating systems. It 
+provides the Event Loop implementation and manages the thread pool that 
+executes blocking tasks like file I/O, DNS resolution, and compression in 
+the background. libuv abstracts away the differences between operating 
+systems (Windows, Linux, macOS) so that Node.js can perform I/O operations 
+consistently regardless of the platform. It essentially acts as the bridge 
+between Node.js's JavaScript code and the underlying operating system's 
+asynchronous capabilities. Without libuv, Node.js would not be able to 
+achieve its non-blocking, event-driven architecture.
