@@ -1,0 +1,15 @@
+REFLECTION NOTES
+================
+
+Question 1:
+While your order's setTimeout is “waiting,” is the Node.js process frozen?
+
+Answer:
+No, the Node.js process is not frozen while setTimeout is waiting. The timer is handled by the Node.js runtime, and the main JavaScript execution can continue with other work. After the specified delay, the callback is placed in the appropriate queue and is executed when the Event Loop is ready. This allows Node.js to handle asynchronous operations without blocking the entire process.
+
+
+Question 2:
+Why does Promise.all() finish faster than running each order one after another with three separate await calls?
+
+Answer:
+Promise.all() starts all the asynchronous operations together instead of waiting for one order to finish before starting the next one. Therefore, the total time is roughly determined by the longest-running operation. With three separate await calls, the second operation starts only after the first one finishes, and the third starts after the second one. Because of this, sequential await operations can take approximately the sum of all three delays.
