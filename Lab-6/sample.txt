@@ -1,0 +1,5 @@
+Node.js is a JavaScript runtime environment.
+The fs module allows Node.js to work with files.
+This file is created for Lab 06 file system operations.Node.js is a JavaScript runtime environment.
+The fs module allows Node.js to work with files.
+This file is created for Lab 06 file system operations.

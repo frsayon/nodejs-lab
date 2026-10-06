@@ -1,0 +1,16 @@
+Question 1
+
+Why does fs.readFile() not block the rest of the program, while fs.readFileSync() does?
+
+Answer : fs.readFile() is an asynchronous file-reading method, so it does not make the program wait for the file operation to finish. The callback is executed later when the file has been successfully read. 
+This allows the remaining JavaScript code to continue running while the file operation is in progress. In contrast, fs.readFileSync() is synchronous and blocks the program until the complete file has been read. 
+Therefore, the difference can be clearly observed from the order of the console output in Tasks 2 and 3.
+
+
+Question 2
+
+What could go wrong if two people ran add-note.js at exactly the same moment and both appended to notes.txt?
+
+Answer:  If two people run add-note.js at exactly the same moment, both programs may try to write to notes.txt at nearly the same time. This can create a race condition because both operations are accessing the same file concurrently.
+ Depending on the timing of the operations, the notes could be written in an unexpected order or a file operation could face an error. With a larger application, proper synchronization or a database would be a safer solution for handling multiple users. 
+For this small application, fs.appendFile() is sufficient for demonstrating basic file storage.
